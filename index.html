@@ -35,3 +35,13 @@ open.onclick=()=>{overlay.classList.add('hide');burst(25)};const candles=[...doc
 spark.onclick=()=>burst(90);let audio,playing=false,timer;music.onclick=()=>{if(playing){clearInterval(timer);playing=false;music.textContent='🎵 生日旋律';return}audio=new(window.AudioContext||window.webkitAudioContext)();let ns=[261.63,261.63,293.66,261.63,349.23,329.63,261.63,261.63,293.66,261.63,392,349.23],i=0;function note(){if(i>=ns.length){clearInterval(timer);playing=false;music.textContent='🎵 再听一次';return}let o=audio.createOscillator(),g=audio.createGain();o.frequency.value=ns[i++];g.gain.setValueAtTime(.001,audio.currentTime);g.gain.exponentialRampToValueAtTime(.1,audio.currentTime+.03);g.gain.exponentialRampToValueAtTime(.001,audio.currentTime+.4);o.connect(g);g.connect(audio.destination);o.start();o.stop(audio.currentTime+.42)}playing=true;music.textContent='🔇 停止音乐';note();timer=setInterval(note,460)};
 const lines=[...document.querySelectorAll('.line')];new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting))lines.forEach((l,i)=>setTimeout(()=>l.classList.add('show'),i*500))},{threshold:.15}).observe(lines[0]);
 </script></body></html>
+const music = new Audio("1000017656.mp4");
+music.loop = true;
+music.volume = 1;
+
+open.onclick = () => {
+  overlay.classList.add("show");
+  music.play().catch(() => {
+    music.textContent = "点击再次播放";
+  });
+};
